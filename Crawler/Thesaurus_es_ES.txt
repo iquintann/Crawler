@@ -1,0 +1,26 @@
+# OpenThesaurus - Spanish Thesaurus in text format
+# Automatically generated 2014-05-07 04:22
+# http://openthes-es.berlios.de
+# Copyleft (C) 2007 Marcelo Garrone <marcelo.garrone@gmail.com>
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or (at
+# your option) any later version.
+Biblia;Sagrada Escritura;Antiguo Testamento;Nuevo Testamento
+CD-ROM;CD;disco compacto
+Creador, constructor, demiurgo, artista;Hacedor;Edificador, artífice
+Dios;Todopoderoso;Jehová;Altísimo;Alá
+Jesucristo;Dios;Jesús;Cristo;Nazareno;Redentor;Mesías;Salvador;Señor
+Pelota;Balón;esférico;bola;canica;globo
+Representar;simbolizar, figurar, personificar, aparentar;encarnar, personalizar
+UCI;unidad de cuidados intensivos;UVI
+Yahvé;Jehová;Dios;Señor;Altísimo;Creador;Padre;Todopoderoso
+a priori;antes;anticipadamente;de antemano;con antelación;con anterioridad;previamente;por lo que precede
+a propósito;premeditadamente
+a quemarropa;a bocajarro;bruscamente;directamente;sin rodeos
+a ultranza;firmemente;decididamente;resueltamente;consecuente;firme
+ababa;amapola;ababol
+ababol;amapola;ababa;adormidera
+ababol;necio (fig.);mentecato;distraido (fig.)
+abacera;tendera;vendedora;suministradora;proveedora;negociante;comerciante
+abacero;tendero;abarrotero;lonjista;comerciante;vendedor;suministrador;proveedor;negociante
