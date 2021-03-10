@@ -67,7 +67,7 @@ class Lister {
 				String path = directory + "/" + fileAndDirectoriesList[i];
 				File fileAux = new File(path);
 
-				//Dependiendo si es un directorio o un fichero lo añadiremos a la cola o a la lista
+				//Dependiendo si es un directorio o un fichero lo aï¿½adiremos a la cola o a la lista
 				if (!fileAux.isDirectory())
 					fileList.add(path);
 				else

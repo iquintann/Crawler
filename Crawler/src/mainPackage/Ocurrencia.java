@@ -15,37 +15,43 @@ public class Ocurrencia implements Serializable {
 	// <URL, ocurrencia local>
 	// Podiamos hacer que se guarde la URL del doc con mayor apariciones para que no
 	// haya que ir a buscarlo
-	private Map<String, Integer> arbolUrls;
+	private Map<Integer, Integer> arbolUrls;
 	private Integer ocurrenciaGlobal;
 
 	public Ocurrencia() {
-		this.arbolUrls = new TreeMap<String, Integer>();
+		this.arbolUrls = new TreeMap<Integer, Integer>();
 		ocurrenciaGlobal = new Integer(0);
 	}
 
 	// añadir nuevo documento o url
-	public void anadirNuevoDoc(String url, Integer ocurrenciaLocal) {
-		this.arbolUrls.put(url, ocurrenciaLocal);
+	public void anadirNuevoDoc(String url, Integer ocurrenciaLocal, Fat fat) {
+		
+		//buscar la URL en mi indice invertido
+		Integer idUrl = fat.insertarURL(url);
+		
+		
+		this.arbolUrls.put(idUrl, ocurrenciaLocal);
 		// Incrementamos el valor de la variable global
 		ocurrenciaGlobal = ocurrenciaGlobal + ocurrenciaLocal;
 
 	}
 
-	public Map<String, Integer> getArbolUrls() {
+	public Map<Integer, Integer> getArbolUrls() {
 		return arbolUrls;
 	}
 
-	public void setArbolUrls(Map<String, Integer> arbolUrls) {
+	public void setArbolUrls(Map<Integer, Integer> arbolUrls) {
 		this.arbolUrls = arbolUrls;
 	}
 
-	public void mostrarURLs() {
+	public void mostrarURLs(Fat fat) {
 		System.out.println("aparece en las siguientes URLs");
-
+ 
 		Iterator it = arbolUrls.entrySet().iterator();
 		while (it.hasNext()) {
 			HashMap.Entry pair = (HashMap.Entry) it.next();
-			System.out.println("URL: " + pair.getKey() + ", aparciones " + pair.getValue());
+			String url= fat.devolverUrl((Integer)pair.getKey());
+			System.out.println("URL: " + pair.getKey() + ", aparciones " + url);
 		
 		}
 	}
@@ -65,23 +71,5 @@ public class Ocurrencia implements Serializable {
 
 		return sortedEntries;
 	}
-	
-//	public void sort(final Comparator<? super T> dataComparator)
-//    {
-//        Collections.sort(this.children,
-//            new Comparator<Tree<T>>()
-//            {
-//                @Override
-//                public int compare(Tree<T> treeA, Tree<T> treeB)
-//                {
-//                    return dataComparator.compare(treeA.getData(), treeB.getData());
-//                }
-//            }
-//        );
-//        for(Tree<T> child: this.children)
-//        {
-//            child.sort(dataComparator);
-//        }
-//    }
 
 }

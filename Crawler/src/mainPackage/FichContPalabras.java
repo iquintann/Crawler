@@ -38,7 +38,7 @@ public class FichContPalabras {
 	 * @param file
 	 * @throws IOException
 	 */
-	public void wordCount(String file) throws IOException {
+	public void wordCount(String file,Fat fat) throws IOException {
 
 		String fichEntrada = file;
 
@@ -80,24 +80,25 @@ public class FichContPalabras {
 		///URL = fichEntrada
 		// Termino --> treeloca.getKey
 		// Ocurrencia --> treeloca.getPair
-		guardarInformacionTreeLocal(mapLocal,file);
+		guardarInformacionTreeLocal(mapLocal,file,fat);
 		
 	}
 
-	private void guardarInformacionTreeLocal(Map<String, Integer> mapLocal,String file) {
+	private void guardarInformacionTreeLocal(Map<String, Integer> mapLocal,String file, Fat fat) {
 		for(Map.Entry<String,Integer> entry : mapLocal.entrySet()) {
 			  String key = entry.getKey();
 			  Integer value = entry.getValue();
 			  
+			  
 			  if(this.mapOcurrencia.containsKey(key)) {
 				  //añado nueva URL
 				  Ocurrencia ocur=mapOcurrencia.get(key);
-				  ocur.anadirNuevoDoc(file,value);
+				  ocur.anadirNuevoDoc(file,value,fat);
 				  
 			  }else{
 				  //creo nuevo nodo en el mapOcurrencia y añado URL
 				  Ocurrencia ocur = new Ocurrencia();
-				  ocur.anadirNuevoDoc(file, value);
+				  ocur.anadirNuevoDoc(file, value,fat);
 				  mapOcurrencia.put(key, ocur);
 			  }
 
