@@ -85,6 +85,10 @@ public class FichContPalabras {
 	}
 
 	private void guardarInformacionTreeLocal(Map<String, Integer> mapLocal,String file, Fat fat) {
+		
+		
+		
+		
 		for(Map.Entry<String,Integer> entry : mapLocal.entrySet()) {
 			  String key = entry.getKey();
 			  Integer value = entry.getValue();
@@ -127,5 +131,8 @@ public class FichContPalabras {
 		pr.close();
 
 	}
+
+
+	
 
 }

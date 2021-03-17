@@ -1,6 +1,7 @@
 package mainPackage;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -45,15 +46,21 @@ public class Ocurrencia implements Serializable {
 	}
 
 	public void mostrarURLs(Fat fat) {
-		System.out.println("aparece en las siguientes URLs");
  
 		Iterator it = arbolUrls.entrySet().iterator();
+		ArrayList<String> listSalida = new ArrayList<String>();
 		while (it.hasNext()) {
 			HashMap.Entry pair = (HashMap.Entry) it.next();
 			String url= fat.devolverUrl((Integer)pair.getKey());
-			System.out.println("URL: " + pair.getKey() + ", aparciones " + url);
-		
+			listSalida.add("URL: " + pair.getKey() + ", aparciones " + url);
 		}
+		
+		for(int i = listSalida.size() -1; i >= 0; i--)
+			System.out.println(listSalida.get(i));
+		
+		
+		
+		
 	}
 	
 

@@ -1,12 +1,33 @@
 package mainPackage;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Fat {
+import javax.crypto.SecretKey;
+
+import com.sun.source.doctree.SerialDataTree;
+
+public class Fat implements Serializable {
 
 	private Map<Integer, String> ordenadoId;
 	private Map<String, Integer> ordenadoURL;
+
+	public Map<Integer, String> getOrdenadoId() {
+		return ordenadoId;
+	}
+
+	public void setOrdenadoId(Map<Integer, String> ordenadoId) {
+		this.ordenadoId = ordenadoId;
+	}
+
+	public Map<String, Integer> getOrdenadoURL() {
+		return ordenadoURL;
+	}
+
+	public void setOrdenadoURL(Map<String, Integer> ordenadoURL) {
+		this.ordenadoURL = ordenadoURL;
+	}
 
 	public Fat() {
 		ordenadoId = new TreeMap<Integer, String>();
