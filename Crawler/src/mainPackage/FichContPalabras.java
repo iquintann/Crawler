@@ -9,20 +9,20 @@ package mainPackage;
 import java.io.*;
 import java.util.*;
 
-public class FichContPalabras {
+public class FichContPalabras implements Serializable {
 
-	private String fichSalida;
-	private PrintWriter pr;
 	private Map<String, Ocurrencia> mapOcurrencia;
 	private HashMap<String, Integer> stopwords;
 
-	public FichContPalabras(String file, HashMap<String, Integer> stopwords) {
-		fichSalida = file;
+	/**
+	 * Constructor
+	 * @param Hasmap <String,Integer> de las stopwords
+	 */
+	public FichContPalabras(HashMap<String, Integer> stopwords) {
 		mapOcurrencia = new TreeMap<String, Ocurrencia>();
 		this.stopwords = stopwords;
 	}
-	
-	
+		
 	public Map<String, Ocurrencia> getMapOcurrencia() {
 		return mapOcurrencia;
 	}
@@ -57,9 +57,11 @@ public class FichContPalabras {
 				String palabra = tokenLinea.nextToken();
 
 				if (!stopwords.containsKey(palabra.toLowerCase())) {
+					
 					// no existe en el stopword, la guardamos
 					Object o = mapLocal.get(palabra);
 					if (o == null) {
+						
 						// Si no existe la palabra la introduzco
 						mapLocal.put(palabra, 1);
 					} else {
@@ -80,15 +82,19 @@ public class FichContPalabras {
 		///URL = fichEntrada
 		// Termino --> treeloca.getKey
 		// Ocurrencia --> treeloca.getPair
+		
+		//System.out.println(mapLocal.toString());
 		guardarInformacionTreeLocal(mapLocal,file,fat);
 		
 	}
 
+	/***
+	 * Guardamos toda la informacion del fichero y lo asociamos a un numero de id añadiendolo en la estructura fat
+	 * @param mapLocal hasmap de un fichero ya analizado
+	 * @param file url de l fichero para asociarlo a un id de la fat
+	 * @param fat estructura de indice inverso
+	 */
 	private void guardarInformacionTreeLocal(Map<String, Integer> mapLocal,String file, Fat fat) {
-		
-		
-		
-		
 		for(Map.Entry<String,Integer> entry : mapLocal.entrySet()) {
 			  String key = entry.getKey();
 			  Integer value = entry.getValue();
@@ -110,28 +116,7 @@ public class FichContPalabras {
 		
 	}
 
-	/**
-	 * Una vez leeido y explorado todos los documentos llamaremos a este m�todo para
-	 * pasar la estructura map a un documento que tendr� el nombre de
-	 * FichContPalabras.fichSalida
-	 * 
-	 * @throws IOException
-	 */
-	public void writeFileOut() throws IOException {
-		pr = new PrintWriter(new FileWriter(fichSalida));
-
-		ArrayList claves = new ArrayList(mapOcurrencia.keySet());
-		Collections.sort(claves);
-
-		Iterator i = claves.iterator();
-		while (i.hasNext()) {
-			Object k = i.next();
-			pr.println(k + " : " + mapOcurrencia.get(k));
-		}
-		pr.close();
-
-	}
-
+	
 
 	
 

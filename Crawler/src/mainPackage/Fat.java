@@ -10,8 +10,19 @@ import com.sun.source.doctree.SerialDataTree;
 
 public class Fat implements Serializable {
 
+	private String directory;
 	private Map<Integer, String> ordenadoId;
 	private Map<String, Integer> ordenadoURL;
+	
+	/**
+	 * Constructor del objeto fat
+	 * @param <String> directorio que deseamos crawlear
+	 */
+	public Fat(String directory) {
+		this.directory = directory;
+		ordenadoId = new TreeMap<Integer, String>();
+		ordenadoURL = new TreeMap<String, Integer>();
+	}
 
 	public Map<Integer, String> getOrdenadoId() {
 		return ordenadoId;
@@ -29,21 +40,22 @@ public class Fat implements Serializable {
 		this.ordenadoURL = ordenadoURL;
 	}
 
-	public Fat() {
-		ordenadoId = new TreeMap<Integer, String>();
-		ordenadoURL = new TreeMap<String, Integer>();
+	public String getDirectory() {
+		return directory;
+	}
+
+	public void setDirectory(String directory) {
+		this.directory = directory;
 	}
 
 	public Integer insertarURL(String URL) {
 		if (ordenadoURL.containsKey(URL)) {
-			
 			return ordenadoURL.get(URL);
 		} else {
 			Integer idElemento = new Integer(ordenadoURL.size());
 			//System.out.println("Nuevo elemento con ID " + idElemento);
 			ordenadoURL.put(URL, idElemento);
 			ordenadoId.put(idElemento, URL);
-			
 
 			return idElemento;
 		}

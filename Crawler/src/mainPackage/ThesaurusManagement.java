@@ -1,12 +1,9 @@
 package mainPackage;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -15,7 +12,11 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-public class ThesaurusManagement implements Serializable {
+/**
+ * Estructura que se encargará de guardar en un Hashmap con todos los términos
+ * basandose en el documento stopwords_es.txt
+ */
+public class ThesaurusManagement {
 
 	private HashMap<String, Integer> stopwordsMap;
 	private HashMap<String, List<String>> thesaurusMap;
@@ -31,6 +32,10 @@ public class ThesaurusManagement implements Serializable {
 		return thesaurusMap;
 	}
 
+	/**
+	 * El constructor inicializará la carga de los terminos si encuentra el fichero
+	 * "stopwords_es.txt"
+	 */
 	public ThesaurusManagement() {
 		// Inicializacion de variables
 		stopwordsFile = "stopwords_es.txt";
@@ -39,79 +44,68 @@ public class ThesaurusManagement implements Serializable {
 		thesaurusMap = new HashMap<String, List<String>>();
 		wordMat = new ArrayList<List<String>>();
 
-//		// Reading stopwords
-//		readingStopWords();
-//
-//		// Reading thesaurus
-//		readingTesaurus();
-	}
-
-	public void readingTesaurus() {
-		String linea;
-		String arrayWords[] = null;
-		FileReader fileReader;
 		try {
-			fileReader = new FileReader(thesaurusFile);
-			BufferedReader flujoLecturaThesaurus = new BufferedReader(fileReader);
+			// Reading stopwords
+			readingStopWords();
 
-			while ((linea = flujoLecturaThesaurus.readLine()) != null) {
-				if (!linea.contains("# ")) {
+			// Reading thesaurus
+			readingTesaurus();
 
-					// Splitting a line
-					arrayWords = linea.split(";");
-					ArrayList<String> listaSinonimos = new ArrayList<String>();
-					for (int i = 0; i < arrayWords.length; i++) {
-						// System.out.print(arrayWords[i]);
-						listaSinonimos.add(arrayWords[i]);
-					}
-					thesaurusMap.put(listaSinonimos.get(0), listaSinonimos);
-				} else {
-					// System.out.println("Linea de comentario ignorada: "+ linea);
-				}
-
-			}
-			flujoLecturaThesaurus.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha podido encontrar un tesaurus con nombre: " + thesaurusFile);
 		} catch (IOException e) {
-
+			System.out.println("Error to load stopwords and/or thesaurus.");
+			e.printStackTrace();
 		}
-
 	}
 
-	public void readingStopWords() {
+	/**
+	 * Recorremos el fichero thesaurus en busca de terminos y guarda sus sinonimos
+	 * 
+	 * @throws IOException
+	 */
+	private void readingTesaurus() throws IOException {
 		String linea;
 		String arrayWords[] = null;
-		BufferedReader flujoLectura;
-		try {
-			flujoLectura = new BufferedReader(new FileReader(stopwordsFile));
-			while ((linea = flujoLectura.readLine()) != null) {
-				arrayWords = linea.split(" ");
+		BufferedReader flujoLecturaThesaurus = new BufferedReader(new FileReader(thesaurusFile));
 
+		while ((linea = flujoLecturaThesaurus.readLine()) != null) {
+			if (!linea.contains("# ")) {
+
+				// Splitting a line
+				arrayWords = linea.split(";");
+				ArrayList<String> listaSinonimos = new ArrayList<String>();
 				for (int i = 0; i < arrayWords.length; i++) {
-					stopwordsMap.put(arrayWords[i], null);
+					// System.out.print(arrayWords[i]);
+					listaSinonimos.add(arrayWords[i]);
 				}
-
+				thesaurusMap.put(listaSinonimos.get(0), listaSinonimos);
+			} else {
+				// System.out.println("Linea de comentario ignorada: "+ linea);
 			}
 
-			flujoLectura.close();
-		} catch (IOException e) {
-			System.out.println("No se ha podido encontrar un diccionario de stopwords con el nombre: " + stopwordsFile);
 		}
 
+		flujoLecturaThesaurus.close();
+
 	}
 
-	public String addImput() {
-		Scanner myObj = new Scanner(System.in);
-		System.out.println("Enter a key: ");
+	/**
+	 * Lee el fichero de stopwords para tener un referente en que palabras ignorar a
+	 * la hora de construir el tesaurus
+	 * 
+	 * @throws IOException ocurrirá sino se encontrase el fichero
+	 */
+	private void readingStopWords() throws IOException {
+		String linea;
+		String arrayWords[] = null;
+		BufferedReader flujoLectura = new BufferedReader(new FileReader(stopwordsFile));
+		while ((linea = flujoLectura.readLine()) != null) {
+			arrayWords = linea.split(" ");
 
-		String input = myObj.nextLine();
-		System.out.println("Input: " + input);
-		return input;
-	}
-
-	public void buildDictionary(String key) {
-
+			for (int i = 0; i < arrayWords.length; i++) {
+				stopwordsMap.put(arrayWords[i], null);
+			}
+		}
+		flujoLectura.close();
 	}
 
 	public List<List<String>> getWordMat() {
@@ -122,28 +116,10 @@ public class ThesaurusManagement implements Serializable {
 		this.wordMat = wordMat;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "ThesaurusManagement [stopwords=" + stopwordsMap + ", tsDictionary=" + thesaurusMap + ", wordMat="
-//				+ wordMat + "]";
-//	}
-
-	public ThesaurusManagement(String dato) {
-		try {
-			ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream("thesaurus.dat"));
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public String toString() {
-		return this.thesaurusMap.toString();
+		return "ThesaurusManagement [stopwords=" + stopwordsMap + ", tsDictionary=" + thesaurusMap + ", wordMat="
+				+ wordMat + "]";
 	}
 
 	public static void showTesaurus(ThesaurusManagement ts) {
@@ -157,7 +133,10 @@ public class ThesaurusManagement implements Serializable {
 		}
 		System.out.println();
 	}
-
+	/**
+	 * Metodo para mostrar el hasmap de stopwords
+	 * @param Un objeto this
+	 */
 	public static void showStopWords(ThesaurusManagement ts) {
 		HashMap<String, Integer> thesaurus = ts.getStopWords();
 		System.out.println("---StopWords---");
